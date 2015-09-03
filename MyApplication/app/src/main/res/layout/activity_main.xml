@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:background="#ff813d"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:id="@+id/edGoalMoney"
+        android:layout_margin="10px"
+        android:hint="第一桶金的金额"
+        />
+
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="点我一次一块钱"
+        android:background="#bbff00"
+        android:id="@+id/btnGetMoney"
+        android:layout_margin="10px"
+
+        />
+
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="点我一次损失一块钱"
+        android:background="#ff0000"
+        android:id="@+id/btnGetMoney2"
+        android:layout_margin="10px"
+
+        />
+    <TextView android:text="哈哈,我通过点击按钮挣了..." android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvGetMoney"
+        android:layout_margin="10px"
+        android:textColor="#0000ff"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        >
+       <TextView
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent"
+           android:text="你幸福吗"
+           android:textColor="#000000"
+           android:textSize="20dp"
+
+           />
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rgCCAVsurvey"
+            >
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="幸福"
+                android:id="@+id/rbSoHappy"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不幸福"
+                android:id="@+id/rbNoHappy"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我姓曾"
+                android:id="@+id/rbZeng"
+                android:checked="true"
+                />
+        </RadioGroup>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:background="#ffffff">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="在寝室都干嘛"
+            android:textSize="20dp"
+            android:textColor="#000000"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LOL"
+            android:id="@+id/cbLOL"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="陪女友逛街"
+            android:id="@+id/cbGirlFriend"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="苦逼搬砖"
+            android:id="@+id/cbCodingMoney"
+            android:checked="true"
+           />
+
+
+
+    </LinearLayout>
+</LinearLayout>
