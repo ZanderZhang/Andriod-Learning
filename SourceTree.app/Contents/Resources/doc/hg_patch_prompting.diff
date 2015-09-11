@@ -1,0 +1,34 @@
+diff --git a/mercurial/ui.py b/vcs_systems/mercurial_local/mercurial/ui.py
+--- a/mercurial/ui.py
++++ b/mercurial/ui.py
+@@ -458,7 +458,13 @@
+                 # windows sometimes raises something other than ImportError
+             except Exception:
+                 pass
+-        line = raw_input(prompt)
++        # SourceTree mod: prompt using read_line instead which ensures prompt is flushed
++        self.write_err(prompt)
++        line = sys.stdin.readline()
++        # get rid of \r
++        line = line[:-1]
++        #line = raw_input(prompt)
++        # End SourceTree mod
+         # When stdin is in binary mode on Windows, it can cause
+         # raw_input() to emit an extra trailing carriage return
+         if os.linesep == '\r\n' and line and line[-1] == '\r':
+@@ -498,7 +504,14 @@
+         if not self.interactive():
+             return default
+         try:
+-            return getpass.getpass(prompt or _('password: '))
++            #SourceTree mod - ensure we flush so that we can read prompt!
++            self.write_err('password:')
++            pwd = sys.stdin.readline() 
++            # get rid of \r
++            pwd = pwd[:-1]
++            return pwd
++            #return getpass.getpass(prompt or _('password: '))
++            #End SourceTree mod
+         except EOFError:
+             raise util.Abort(_('response expected'))
+     def status(self, *msg, **opts):

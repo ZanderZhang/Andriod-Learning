@@ -1,0 +1,11 @@
+diff --git hgsubversion/wrappers.py b/vcs_systems/mercurial_local/hgext/hgsubversion/wrappers.py
+--- hgsubversion/wrappers.py
++++ hgsubversion/wrappers.py
+@@ -315,6 +315,7 @@
+                         bits = (r.revnum, r.author, msg)
+                         ui.status(('[r%d] %s: %s' % bits)[:w] + '\n')
+                         util.progress(ui, 'pull', r.revnum - start, total=total)
++                        ui.flush()
+ 
+                         meta.save_tbdelta(tbdelta)
+                         close = pullfuns[have_replay](ui, meta, svn, r, tbdelta)

@@ -1,0 +1,31 @@
+diff --git a/mercurial/dirstate.py b/mercurial_local/mercurial/dirstate.py
+--- a/mercurial/dirstate.py
++++ b/mercurial/dirstate.py
+@@ -113,11 +113,25 @@
+ 
+     @propertycache
+     def _checklink(self):
+-        return util.checklink(self._root)
++		 # Force checks to happen in '.hgcheck' folder so we can identify them
++         d = os.path.join(self._root, '.hgcheck')
++         try:
++             if not os.path.isdir(d):
++                 os.mkdir(d)
++             return util.checklink(d)
++         except (IOError, OSError):
++             return False
+ 
+     @propertycache
+     def _checkexec(self):
+-        return util.checkexec(self._root)
++		 # Force checks to happen in '.hgcheck' folder so we can identify them
++         d = os.path.join(self._root, '.hgcheck')
++         try:
++             if not os.path.isdir(d):
++                 os.mkdir(d)
++             return util.checkexec(d)
++         except (IOError, OSError):
++             return False
+ 
+     @propertycache
+     def _checkcase(self):

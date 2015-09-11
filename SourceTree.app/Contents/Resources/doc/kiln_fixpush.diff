@@ -1,0 +1,11 @@
+--- bfiles/kbfiles/bfutil.py	2011-03-08 19:47:42.000000000 +0000
++++ bfiles/kbfiles/bfutil.py	2011-03-10 15:58:03.000000000 +0000
+@@ -74,7 +74,7 @@
+     # First attempt is for Mercurial <= 1.5 second is for >= 1.6
+     try:
+         return repo.findoutgoing(remote)
+-    except AttributeError:
++    except (AttributeError, TypeError):
+         from mercurial import discovery
+         return discovery.findoutgoing(repo, remote, force=force)
+ 

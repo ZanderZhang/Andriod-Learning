@@ -1,0 +1,67 @@
+diff --git a/SourceTree.xcodeproj/project.pbxproj b/SourceTree.xcodeproj/project.pbxproj
+--- a/SourceTree.xcodeproj/project.pbxproj
++++ b/SourceTree.xcodeproj/project.pbxproj
+@@ -1010,6 +1010,7 @@
+ 		AA26536A151A24F4004162E4 /* GitHubLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GitHubLogo.png; sourceTree = "<group>"; };
+ 		AA26536C151A2787004162E4 /* KilnLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KilnLogo.png; sourceTree = "<group>"; };
+ 		AA26898E154EF61200604B99 /* buildpostprocess.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = buildpostprocess.sh; path = deploy/buildpostprocess.sh; sourceTree = "<group>"; };
++		AA281AF917044CC6001F22B1 /* SparkleAppcast_beta.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SparkleAppcast_beta.xml; path = doc/SparkleAppcast_beta.xml; sourceTree = "<group>"; };
+ 		AA2CD44A1376B62200F23539 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = AddToBookmarks.xib; sourceTree = "<group>"; };
+ 		AA2CD44C1376B62200F23539 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = ApplyPatchSheet.xib; sourceTree = "<group>"; };
+ 		AA2CD44E1376B62200F23539 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = AuthWindow.xib; sourceTree = "<group>"; };
+@@ -2415,6 +2416,7 @@
+ 				AAA6F0BE125F1CE400FE4353 /* builddmg.sh */,
+ 				AAA6F0D1125F1DAC00FE4353 /* signupdate.sh */,
+ 				AAAA5A1F125DEB8400F9D770 /* SparkleAppcast.xml */,
++				AA281AF917044CC6001F22B1 /* SparkleAppcast_beta.xml */,
+ 				AAA6F0D4125F1DE600FE4353 /* upload.sh */,
+ 				AAA6F0DD125F220200FE4353 /* updateappcast.xslt */,
+ 				AAA6F167125F3C5A00FE4353 /* ReleaseNotes.html */,
+diff --git a/deploy/signupdate.sh b/deploy/signupdate.sh
+--- a/deploy/signupdate.sh
++++ b/deploy/signupdate.sh
+@@ -7,7 +7,7 @@
+ VERSION=$(defaults read "$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info" CFBundleVersion)
+ DISPLAYVERSION=$(defaults read "$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info" CFBundleShortVersionString)
+ DOWNLOAD_BASE_URL="http://downloads.atlassian.com/software/sourcetree"
+-RELEASENOTES_URL="http://www.sourcetreeapp.com/update/ReleaseNotes.html#version-$VERSION"
++RELEASENOTES_URL="http://www.sourcetreeapp.com/update/ReleaseNotes_beta.html#version-$VERSION"
+ 
+ ARCHIVE_FILENAME="${PROJECT_NAME}_$DISPLAYVERSION.dmg"
+ # replace spaces with underscores
+@@ -45,7 +45,7 @@
+ </rss>
+ EOF
+ 
+-xsltproc -o tempappcast.xml updateappcast.xslt ../doc/SparkleAppcast.xml
++xsltproc -o tempappcast.xml updateappcast.xslt ../doc/SparkleAppcast_beta.xml
+ rm update.xml
+-mv -f tempappcast.xml ../doc/SparkleAppcast.xml
++mv -f tempappcast.xml ../doc/SparkleAppcast_beta.xml
+ 
+diff --git a/deploy/upload.sh b/deploy/upload.sh
+--- a/deploy/upload.sh
++++ b/deploy/upload.sh
+@@ -20,7 +20,7 @@
+    exit 1
+ fi
+ 
+-if grep -q version-$VERSION ../doc/SparkleAppcast.xml 
++if grep -q version-$VERSION ../doc/SparkleAppcast_beta.xml 
+ then
+    echo Appcast entry found.
+   
+@@ -47,11 +47,11 @@
+ 
+ # Upload release notes (TKS server)
+ echo Uploading Release Notes...
+-scp -P 86 ../doc/ReleaseNotes.html toruskno@torusknot.com:public_html/sourcetreeapp.com/update/
++scp -P 86 ../doc/ReleaseNotes.html toruskno@torusknot.com:public_html/sourcetreeapp.com/update/ReleaseNotes_beta.html
+ echo Release Notes done
+ 
+ # Upload appcast (TKS server)
+ echo Uploading Appcast
+-scp -P 86 ../doc/SparkleAppcast.xml toruskno@torusknot.com:public_html/sourcetreeapp.com/update/
++scp -P 86 ../doc/SparkleAppcast_beta.xml toruskno@torusknot.com:public_html/sourcetreeapp.com/update/
+ echo Appcast done
+ 

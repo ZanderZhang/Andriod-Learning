@@ -1,0 +1,47 @@
+--- a/mercurial-2.0/mercurial/ui.py	2011-11-01 20:36:00.000000000 +0000
++++ b/mercurial/ui.py	2011-11-11 12:18:19.000000000 +0000
+@@ -551,19 +551,13 @@
+             except Exception:
+                 pass
+ 
+-        # call write() so output goes through subclassed implementation
+-        # e.g. color extension on Windows
+-        self.write(prompt)
+-
+-        # instead of trying to emulate raw_input, swap (self.fin,
+-        # self.fout) with (sys.stdin, sys.stdout)
+-        oldin = sys.stdin
+-        oldout = sys.stdout
+-        sys.stdin = self.fin
+-        sys.stdout = self.fout
+-        line = raw_input(' ')
+-        sys.stdin = oldin
+-        sys.stdout = oldout
++        # SourceTree mod: prompt using read_line instead which ensures prompt is flushed
++        self.write_err(prompt)
++        line = sys.stdin.readline()
++        # get rid of \r
++        line = line[:-1]
++        #line = raw_input(prompt)
++        # End SourceTree mod
+ 
+         # When stdin is in binary mode on Windows, it can cause
+         # raw_input() to emit an extra trailing carriage return
+@@ -604,7 +598,16 @@
+         if not self.interactive():
+             return default
+         try:
+-            return getpass.getpass(prompt or _('password: '))
++            # Ensure we flush so that we can read prompt in non-terminal
++            self.write_err('password:')
++            pwd = sys.stdin.readline() 
++            # get rid of \r \n
++            if pwd and pwd[-1] == '\n':
++                pwd = pwd[:-1]
++            if pwd and pwd[-1] == '\r':
++                pwd = pwd[:-1]
++                
++            return pwd
+         except EOFError:
+             raise util.Abort(_('response expected'))
+     def status(self, *msg, **opts):

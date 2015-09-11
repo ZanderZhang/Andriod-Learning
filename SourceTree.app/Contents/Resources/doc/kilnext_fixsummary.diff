@@ -1,0 +1,15 @@
+--- bfiles/kbfiles/bfsetup.py	2011-03-08 19:47:42.000000000 +0000
++++ bfiles/kbfiles/bfsetup.py	2011-03-10 12:38:39.000000000 +0000
+@@ -934,7 +934,11 @@
+             ui.status('\n')
+ 
+ def override_summary(orig, ui, repo, *pats, **opts):
+-    orig(ui, repo, *pats, **opts)
++    try:
++        repo.bfstatus = True
++        orig(ui, repo, *pats, **opts)
++    finally:
++        repo.bfstatus = False
+ 
+     if opts.pop('bf', None):
+         toupload = get_outgoing_bfiles(ui, repo, None, **opts)

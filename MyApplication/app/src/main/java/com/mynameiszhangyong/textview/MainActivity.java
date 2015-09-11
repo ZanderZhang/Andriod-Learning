@@ -1,5 +1,6 @@
 package com.mynameiszhangyong.textview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -34,6 +36,15 @@ public class MainActivity extends ActionBarActivity {
         tvGetMoney=(TextView)findViewById(R.id.tvGetMoney);
         edGoalMoney=(EditText)findViewById(R.id.edGoalMoney);
 
+        btnSwitch = (Button)findViewById(R.id.btnSwichAty);
+        btnSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,SecondAty.class);
+                startActivity(intent);
+            }
+        });
+
         rgCCAVsurvey =(RadioGroup)findViewById(R.id.rgCCAVsurvey);
         cbLOL=(CheckBox)findViewById(R.id.cbLOL);
         cbGF=(CheckBox)findViewById(R.id.cbGirlFriend);
@@ -58,14 +69,59 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
 //                money++;
 //                tvGetMoney.setText("哈哈,我挣到了"+money+"元");
-                if (money==0){
+                if (money == 0) {
 //                    提示
-                    Toast.makeText(MainActivity.this,"别按了,没钱了",Toast.LENGTH_SHORT).show();
-                }else {
+                    Toast.makeText(MainActivity.this, "别按了,没钱了", Toast.LENGTH_SHORT).show();
+                } else {
                     money--;
-                    tvGetMoney.setText("哈哈,我挣到了"+money+"元");
+                    tvGetMoney.setText("哈哈,我挣到了" + money + "元");
                 }
             }
+        });
+
+        rgCCAVsurvey.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rbSoHappy:
+                        Toast.makeText(MainActivity.this, "你开心就好", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rbNoHappy:
+                        Toast.makeText(MainActivity.this, "你要开心", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rbZeng:
+                        Toast.makeText(MainActivity.this, "你姓张", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+
+
+        });
+        cbLOL.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    Toast.makeText(MainActivity.this, "别玩游戏了", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        cbGF.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    Toast.makeText(MainActivity.this, "不错", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+        cbCodingMoney.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Toast.makeText(MainActivity.this, "小伙子加油", Toast.LENGTH_SHORT).show();
+                }
+            }
+
         });
 
 

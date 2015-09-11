@@ -1,0 +1,50 @@
+diff --git a/mercurial/ui.py b/mercurial/ui.py
+--- a/mercurial/ui.py
++++ b/mercurial/ui.py
+@@ -610,19 +610,13 @@
+             except Exception:
+                 pass
+ 
+-        # call write() so output goes through subclassed implementation
+-        # e.g. color extension on Windows
+-        self.write(prompt)
+-
+-        # instead of trying to emulate raw_input, swap (self.fin,
+-        # self.fout) with (sys.stdin, sys.stdout)
+-        oldin = sys.stdin
+-        oldout = sys.stdout
+-        sys.stdin = self.fin
+-        sys.stdout = self.fout
+-        line = raw_input(' ')
+-        sys.stdin = oldin
+-        sys.stdout = oldout
++        # SourceTree mod: prompt using read_line instead which ensures prompt is flushed
++        self.write_err(prompt)
++        line = sys.stdin.readline()
++        # get rid of \r
++        line = line[:-1]
++        #line = raw_input(prompt)
++        # End SourceTree mod
+ 
+         # When stdin is in binary mode on Windows, it can cause
+         # raw_input() to emit an extra trailing carriage return
+@@ -638,10 +632,15 @@
+             self.write(msg, ' ', default, "\n")
+             return default
+         try:
+-            r = self._readline(self.label(msg, 'ui.prompt'))
+-            if not r:
+-                return default
+-            return r
++            self.write_err('password:')
++            pwd = sys.stdin.readline() 
++            # get rid of \r \n
++            if pwd and pwd[-1] == '\n':
++                pwd = pwd[:-1]
++            if pwd and pwd[-1] == '\r':
++                pwd = pwd[:-1]
++                
++            return pwd
+         except EOFError:
+             raise util.Abort(_('response expected'))
+ 

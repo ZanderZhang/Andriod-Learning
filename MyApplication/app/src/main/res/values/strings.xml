@@ -3,4 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_second_aty">SecondAty</string>
+    <string name="title_activity_index">IndexActivity</string>
+    <string name="title_activity_life_circle_aty">LifeCircleAty</string>
+    <string name="title_activity_data_aty_from_life_circle_aty">DataAtyFromLifeCircleAty</string>
 </resources>
